@@ -1,0 +1,363 @@
+
+$t0: #333333;
+$t1: #505050;
+$t2: #818181;
+$t3: #909399;
+$t4: #bababa;
+
+$f1: #02c150;
+$f2: #FD8F00;
+$f3: #FF524C;
+$f4: #0899FF;
+
+$bg0: #f9f9f9;
+$bg1: #fff;
+$bg2: #000;
+$bg3: #eee;
+
+$theme1: #FF6452;
+
+$border1: #E6E6E6;
+$border2: #bababa;
+
+$s0: 18px;
+$s1: 16px;
+$s2: 14px;
+$s3: 12px;
+$s4: 10px;
+$s5: 20px;
+$s6: 24px;
+/* ---------------------------分割线-----------------------------------*/
+// 字体颜色
+$txt0:#000000;
+$txt1:#333333;
+$txt2:#4d4d4d;
+$txt3:#666666;
+$txt4:#808080;
+$txt5:#999999;
+$txt6:#b3b3b3;
+$txt7:#808080;
+$txt8:#cccccc;
+$txt9:#e5e5e5;
+$txt10:#f5f5f5;
+$txt11:#fafafa;
+$txt12:#1a1a1a;
+$txt13:#ffffff;
+// 主题颜色
+$theme1:#ff524c;
+$theme2:#EE0A24;
+$theme3:#FFAA00;
+$theme4:#111a34;
+$theme5:#858B9C;
+$theme6:#41485D;
+$theme7:#02c150;
+//背景色
+$bc0:#ffffff;
+$bc1:#FAFAFA;
+$bc2:#f5f5f5;
+$bc3:#e5e5e5;
+$bc4:#999999;
+$bc5:#FFA114;
+$bc6:#FFE7E4;
+$bc7:#EC5050;
+$bc8:#FFD900;
+$bc9:#143BFF;
+$bc10:#F2F3F5;
+// 边框色
+$br1:#E6E6E6;
+$br2:#707070;
+// 按钮颜色
+$btn6:#EE0A24;
+$btn7:#FD8F00;
+// 字体大小
+$s24:24rpx;
+$s26:26rpx;
+$s28:28rpx;
+$s30:30rpx;
+$s32:32rpx;
+$s34:34rpx;
+$s36:36rpx;
+$s38:38rpx;
+$s40:40rpx;
+$s42:42rpx;
+$s44:44rpx;
+
+/*
+说明：设置宽高跟定位
+参数：宽 高 定位
+引入：@include wh(230, 230, r); @include wh(230rpx, 230rpx, a); @include wh(100%, 100%, f);
+*/
+@mixin wh ($width, $height, $position) {
+	@if $position == a { position: absolute; } 
+	@if $position == r { position: relative; }
+	@if $position == f { position: fixed; }
+	width: $width;
+	height: $height;
+}
+/*
+说明：用来做居中，上下左右居中||左右居中||上下居中
+参数：居中方式： lt || lb ||　rt || rb
+引入：@include jz(lt, 50%, 50%);
+*/
+@mixin jz ($direction, $a, $b) {
+    @if $direction == lt { left: $a; top: $b; }
+	@if $direction == lb { left: $a; bottom: $b; }
+	@if $direction == rt { right: $a; top: $b; }
+	@if $direction == rb { right: $a; bottom: $b; }
+	-webkit-transform: translate3d(-50%, -50%, 0);
+	transform: translate3d(-50%, -50%, 0);
+}
+/*
+说明：阴影(默认拼接单位)
+参数：x偏移距离，y偏移距离，r阴影半径，k扩展，阴影颜色
+引入：@include shadow(2, 2, 5,1, #666);
+*/
+@mixin shadow ($x, $y, $r, $k, $color) {
+	-moz-box-shadow: $x $y $r $k $color;
+	-webkit-box-shadow: $x $y $r $k $color;
+	box-shadow: $x $y $r $k $color;
+}
+/*
+说明：圆角(不带单位)
+参数： 圆角度数 20rpx || 100%
+引入：@include radius(100%);
+*/
+@mixin radius ($radius) {
+	border-radius: $radius;
+	overflow: hidden;
+}
+/*
+说明：上颜色
+参数： 背景色 字体颜色
+引入：@include color(#000, #fff);
+*/
+@mixin color ($background, $color) {
+	background: $background;
+	color: $color;
+}
+/*
+说明：自己设置的常用文本要用的熟悉;
+参数：字号，文字上距离，对齐方式 center || left || right， 定义粗细 normal || bold || bolder || lighter || 100~900
+引入：@include txt(18upx, 140upx, center, 500)
+*/
+@mixin txt ($size, $line-height, $align, $weight) {
+	font-size: $size;
+	line-height: $line-height;
+	text-align: $align;
+	font-weight: $weight;
+}
+/*
+说明：文字自动换行
+引入：@include txthh()
+*/
+@mixin txthh () {
+	width: inherit;
+	white-space:normal;
+	word-break:break-all;
+	word-wrap:break-word;
+}
+/*
+说明：文字居中
+引入：@include txtjz()
+*/
+@mixin txtjz () {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/*
+说明：文本超出显示省略号
+参数： 行数: 3就是显示3行超出部分在显示省略号（整数）
+引入：@include txt-hide(3);
+*/
+@mixin txt-hide ($rows) {
+	@if $rows == 1 {
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		word-break: break-all;
+	} @else {
+		text-overflow: -o-ellipsis-lastline;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: $rows;
+		line-clamp: $rows;
+		-webkit-box-orient: vertical;
+	}
+}
+/*
+说明：旋转
+参数： 旋转度数，旋转中心点x轴的位置 50% || 100%，旋转中心点y轴的位置 50% || 100%
+引入：@include rotate(-45deg, 50%, 50%);
+*/
+@mixin rotate ($rotate, $x, $y) {
+	transform: rotate($rotate);
+	-ms-transform: rotate($rotate);
+	-moz-transform: rotate($rotate);
+	-webkit-transform: rotate($rotate);
+	-o-transform: rotate($rotate);
+	-webkit-transform-origin: $x $y;
+	transform-origin: $x $y
+}
+/*
+说明：边框
+参数：内边框还是外边框 1||2，方向，尺寸，颜色
+引入：@include border(1, left, 1rpx, red);
+*/
+@mixin border ($isw, $direction, $num, $color) {
+	@if $isw == 1 { box-sizing: border-box; } // 内
+	@if $isw == 2 { box-sizing: content-box; } // 外
+	@if $direction == left { border-left: $num solid $color }
+	@if $direction == right { border-right: $num solid $color}
+	@if $direction == top { border-top: $num solid $color }
+	@if $direction == bottom { border-bottom: $num solid $color }
+	@if $direction == arr { border: $num solid $color }
+	@if $direction == all { border: $num solid $color }
+}
+/*
+说明：padding 边距
+参数： 内边距还是外边距 1||2，数值 10px || 20px 20px || 30px 20px 10px 0px
+引入：@include padding(1, 10px 20px);
+*/
+@mixin padding ($isw, $padding) {
+	@if $isw == 1 { box-sizing: border-box; } // 内
+	@if $isw == 2 { box-sizing: content-box; } // 外
+	padding: $padding;
+}
+/*
+说明：背景图
+参数： 图片路径
+引入：@include bg('');
+*/
+@mixin bg ($url) {
+	background-image: url($url) no-repeat;
+	background-size:cover;
+}
+
+.page{
+    width: 100%;
+    height: 100vh;
+    background-color: $bg0;
+    position: relative;
+}
+.page-b{
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    position: relative;
+}
+.zw{@include wh(100%, 120rpx, r);}
+.margin-top{margin-top: 20rpx;}
+.margin-bottom{margin-bottom: 20rpx;}
+.border-top{ @include border(1, top, 1rpx, #e9eaec); }
+.border-bottom{ @include border(1, bottom, 1rpx, #e9eaec); }
+.no-border{border:none !important}
+.msg {
+	@include wh(100%, 200rpx, r);
+	@include txt($s3, 200rpx, center, 500);
+	@include color('', $t4);
+}
+.step{
+	@include wh(100%, auto, r);
+	@include padding(1, 0rpx 40rpx);
+}
+.step-b{
+	@include wh(100%, auto, r);
+	@include padding(1, 0rpx 40rpx);
+	@include color(#fff, #000);
+}
+.red { color: $theme1 }
+
+// 通用顶部置顶搜索框
+.search-box {
+    @include wh(100%, 120rpx, f);
+    @include padding(1, 20rpx 30rpx);
+    @include color(#fff, '');
+	@include border(1, bottom, 1rpx, #e9eaec);
+    top:0rpx;
+    z-index: 99;
+    .input-box {
+        @include wh(100%, 40px, r);
+        @include color(#fafafa, '');
+    }
+}
+// 通用提示标题框 
+.title-box{
+	overflow: hidden;
+	@include padding(1, 0 30rpx);
+	@include color(#fff, #333);
+	@include border(1, bottom, 1rpx, #e9eaec);
+	.title{
+		@include wh(50%, 120rpx, r);
+		@include txt(32rpx, 120rpx, left, normal);
+		@include color('', #333);
+		float: left;
+	}
+	.right{
+		@include wh(50%, 120rpx, r);
+		float: right;
+		.btn{
+			@include wh(auto, 60rpx, a);
+			@include padding(1, 0 20rpx);
+			@include txt(14px, 60rpx, center, 500);
+			@include color('', $theme1);
+			@include radius(10rpx);
+			right: 0; top: 30rpx;
+		}
+	}
+}
+.title-box-100{
+	@include wh(100%, auto, r);
+	overflow: hidden;
+	@include padding(1, 20rpx 30rpx);
+	@include color(#fff, #333);
+	@include border(1, bottom, 1rpx, #e9eaec);
+	.title{
+		@include wh(100%, 80rpx, r);
+		@include txt(32rpx, 80rpx, left, normal);
+		@include color('', #333);
+	}
+	.msg{
+	    @include wh(100%, 60rpx, r);
+	    @include txt(28rpx, 60rpx, left, 500);
+	    @include color('', #757575);
+	}
+}
+// 通用底部置底按钮
+.bottom-btn-box{
+	@include wh(100%, 120rpx, f);
+	@include color(#fff, '');
+	@include padding(1, 0rpx 30rpx);
+	@include border(1, top, 1rpx, #e9eaec);
+	z-index: 999;
+	display: table;
+	table-layout: fixed;
+	border-spacing: 30rpx;
+	bottom: 0;
+	view{
+		@include wh(50%, 80rpx, r);
+		@include txt($s28, 80rpx, center, 500);
+		@include radius(100rpx);
+		display: table-cell;
+	}
+	button{
+		@include wh(50%, 80rpx, r);
+		@include txt($s28, 80rpx, center, 500);
+		@include radius(100rpx);
+		display: table-cell;
+	}
+	// 带全选
+	.all{
+		@include txt($s28, 80rpx, left, 500);
+		.price{ color: $theme1}
+	}
+	// 金额类型
+	.money{
+		@include txt($s32, 80rpx, left, 500);
+		.price{ color: $theme1}
+	}
+	.white{ @include color(#FFFFFF, #B1B1B1); @include border(1, all, 1rpx, #DCDEE0); }
+	.yellow{ @include color(#FD8F00, #FFFFFF); }
+	.red{ @include color(#ff524c, #FFFFFF); }
+}
